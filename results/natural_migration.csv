@@ -1,0 +1,16 @@
+natural_migration,policy,npv
+0,baseline,0.0
+0,full_calm,1735015200.9561436
+0,full_stress,-529547873.1435503
+0,full_assurance,871895613.4677792
+0,selective_physical,424265803.3693979
+0.15,baseline,0.0
+0.15,full_calm,1249461967.5356467
+0.15,full_stress,-1015101106.5640472
+0.15,full_assurance,386342380.04728246
+0.15,selective_physical,212516496.63874435
+0.3,baseline,0.0
+0.3,full_calm,886480941.0017095
+0.3,full_stress,-1378082133.0979846
+0.3,full_assurance,23361353.513345122
+0.3,selective_physical,54302734.00305271

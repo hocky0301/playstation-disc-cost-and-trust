@@ -1,0 +1,14 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ディスク廃止：利益と追加離脱の計算機</title><style>
+*{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Yu Gothic",sans-serif;max-width:950px;margin:40px auto;padding:0 20px;background:#f7f9fb;color:#213441;line-height:1.9}h1{font-size:clamp(24px,4vw,34px);line-height:1.5}a{color:#174e75}.intro{padding:18px;background:#eaf1f6;border-left:4px solid #174e75}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}label{display:block;background:white;padding:18px;border:1px solid #dde5ec;border-radius:8px}label small{display:block;color:#5a6976;font-size:12px}input{width:100%;font:inherit;padding:8px;border:1px solid #8198aa;border-radius:4px}.result{display:flex;gap:16px;flex-wrap:wrap;margin-top:24px}.metric{flex:1;min-width:240px;padding:22px;background:#142f43;color:white;border-radius:8px}.metric strong{font-size:32px;display:block}#error{color:#912b2b}code{font-size:13px;overflow-wrap:anywhere}.notes{font-size:14px} @media(max-width:600px){.grid{grid-template-columns:1fr}body{margin-top:20px}}</style></head><body>
+<a href="README.md">← モデルの説明と実行手順</a><h1>ディスク廃止は、何％の追加離脱まで利益が残るか</h1>
+<p class="intro">すべて説明用の仮定です。ソニーの顧客数・原価・離脱率・将来利益の予測ではありません。金額は同じ期間・同じ時点の現在価値で入力します。</p>
+<form id="model-form"><div class="grid">
+<label>対象人数 N<input name="n" type="number" value="1000000" min="1"><small>集計対象を統一。MAUをそのまま買い手数として使わない。</small></label>
+<label>従来の一人あたり利益 L（円）<input name="ltv" type="number" value="40000" min="0"><small>売上ではなく将来貢献利益の現在価値。</small></label>
+<label>残った一人の移行増益 G（円）<input name="uplift" type="number" value="3000" min="0"><small>変動費削減を含む純増分。同じ原価を固定費へ重ねない。</small></label>
+<label>固定費の削減 F（億円）<input name="fixed" type="number" value="3" min="0" step="0.1"><small>本当に回避できる費用の現在価値。</small></label>
+<label>移行費用 K（億円）<input name="transition" type="number" value="1" min="0" step="0.1"><small>初期費用の現在価値。</small></label>
+<label>追加離脱 d（％）<input name="exit" type="number" value="5" min="0" max="100" step="0.1"><small>自然な離脱に加え、この施策が原因で失う分。</small></label>
+<label>残る人の利益減少 e（％）<input name="spend" type="number" value="0" min="0" max="100" step="0.1"><small>買い控えなど。従来利益と移行増益の両方へ作用。</small></label>
+</div></form><div class="result"><div class="metric">利益現在価値の差<strong id="delta"></strong></div><div class="metric">追加離脱の損益分岐<strong id="threshold"></strong></div></div><p id="error" role="alert"></p><p id="meaning"></p>
+<p class="notes">式：<code>ΔV = N × [(1 − d) × (1 − e) × (L + G) − L] + F − K</code></p><p class="notes">この簡略計算は均質なコホートを仮定します。年次の自然移行や顧客群の違いを扱う五年モデルは <code>code/model.py</code> と <code>code/scenarios.json</code> にあります。ブラウザから外部へデータを送信しません。</p><script src="code/calculator.js"></script></body></html>

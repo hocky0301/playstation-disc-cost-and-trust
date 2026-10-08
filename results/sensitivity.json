@@ -1,0 +1,169 @@
+{
+  "status": "ILLUSTRATIVE_SENSITIVITY_NOT_PROBABILISTIC_FORECAST",
+  "assurance_without_behavior_change": {
+    "npv": -1758030893.062177,
+    "components_pv": {
+      "retained_uplift": 1556057990.3079052,
+      "exit_loss": 2186979070.5636992,
+      "spend_loss": 713305230.7576232,
+      "assurance_cost": 392929786.4981307,
+      "avoided_fixed": 479125204.44937015,
+      "transition_cost": 500000000
+    },
+    "yearly": [
+      {
+        "year": 1,
+        "baseline_contribution": 9200000000.0,
+        "policy_before_fixed": 9006132000.0,
+        "retained_uplift": 591400000.0,
+        "exit_loss": 457500000.0,
+        "spend_loss": 212058000.0,
+        "assurance_cost": 115710000.0,
+        "avoided_fixed": 120000000,
+        "baseline_members": 1000000.0,
+        "policy_members": 964250.0,
+        "delta": -73868000.0,
+        "discount_factor": 0.9259259259259258,
+        "discounted_delta": -68396296.29629628
+      },
+      {
+        "year": 2,
+        "baseline_contribution": 8552320000.0,
+        "policy_before_fixed": 8191862877.6,
+        "retained_uplift": 455316372.0,
+        "exit_loss": 517995051.99999976,
+        "spend_loss": 192265574.4,
+        "assurance_cost": 105512868.0,
+        "avoided_fixed": 120000000,
+        "baseline_members": 920000.0,
+        "policy_members": 879273.9,
+        "delta": -240457122.39999962,
+        "discount_factor": 0.8573388203017831,
+        "discounted_delta": -206153225.65157714
+      },
+      {
+        "year": 3,
+        "baseline_contribution": 7937200640.0,
+        "policy_before_fixed": 7451484179.81328,
+        "retained_uplift": 350555117.87015986,
+        "exit_loss": 565727907.6941601,
+        "spend_loss": 174326800.75632,
+        "assurance_cost": 96216869.6064,
+        "avoided_fixed": 120000000,
+        "baseline_members": 846400.0,
+        "policy_members": 801807.2467199999,
+        "delta": -365716460.1867199,
+        "discount_factor": 0.7938322410201696,
+        "discounted_delta": -290317517.16798747
+      },
+      {
+        "year": 4,
+        "baseline_contribution": 7356234388.48,
+        "policy_before_fixed": 6778265659.45664,
+        "retained_uplift": 269904711.50708187,
+        "exit_loss": 602063806.1730691,
+        "spend_loss": 158067498.12220713,
+        "assurance_cost": 87742136.23516512,
+        "avoided_fixed": 120000000,
+        "baseline_members": 778688.0,
+        "policy_members": 731184.468626376,
+        "delta": -457968729.0233593,
+        "discount_factor": 0.7350298527964533,
+        "discounted_delta": -336620687.4794186
+      },
+      {
+        "year": 5,
+        "baseline_contribution": 6809971300.751361,
+        "policy_before_fixed": 6166092415.670372,
+        "retained_uplift": 207814447.82812113,
+        "exit_loss": 628347527.4068055,
+        "spend_loss": 143329905.36807078,
+        "assurance_cost": 80015900.13423374,
+        "avoided_fixed": 120000000,
+        "baseline_members": 716392.9600000001,
+        "policy_members": 666799.1677852811,
+        "delta": -523878885.0809889,
+        "discount_factor": 0.6805831970337529,
+        "discounted_delta": -356543166.4668975
+      }
+    ]
+  },
+  "grid_rows": 9211,
+  "natural_migration": [
+    {
+      "natural_migration": 0,
+      "policy": "baseline",
+      "npv": 0.0
+    },
+    {
+      "natural_migration": 0,
+      "policy": "full_calm",
+      "npv": 1735015200.9561436
+    },
+    {
+      "natural_migration": 0,
+      "policy": "full_stress",
+      "npv": -529547873.1435503
+    },
+    {
+      "natural_migration": 0,
+      "policy": "full_assurance",
+      "npv": 871895613.4677792
+    },
+    {
+      "natural_migration": 0,
+      "policy": "selective_physical",
+      "npv": 424265803.3693979
+    },
+    {
+      "natural_migration": 0.15,
+      "policy": "baseline",
+      "npv": 0.0
+    },
+    {
+      "natural_migration": 0.15,
+      "policy": "full_calm",
+      "npv": 1249461967.5356467
+    },
+    {
+      "natural_migration": 0.15,
+      "policy": "full_stress",
+      "npv": -1015101106.5640472
+    },
+    {
+      "natural_migration": 0.15,
+      "policy": "full_assurance",
+      "npv": 386342380.04728246
+    },
+    {
+      "natural_migration": 0.15,
+      "policy": "selective_physical",
+      "npv": 212516496.63874435
+    },
+    {
+      "natural_migration": 0.3,
+      "policy": "baseline",
+      "npv": 0.0
+    },
+    {
+      "natural_migration": 0.3,
+      "policy": "full_calm",
+      "npv": 886480941.0017095
+    },
+    {
+      "natural_migration": 0.3,
+      "policy": "full_stress",
+      "npv": -1378082133.0979846
+    },
+    {
+      "natural_migration": 0.3,
+      "policy": "full_assurance",
+      "npv": 23361353.513345122
+    },
+    {
+      "natural_migration": 0.3,
+      "policy": "selective_physical",
+      "npv": 54302734.00305271
+    }
+  ]
+}

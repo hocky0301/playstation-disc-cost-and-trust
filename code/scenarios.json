@@ -1,0 +1,34 @@
+{
+  "status": "All inputs are illustrative assumptions. Not fitted to Sony data.",
+  "common": {"years": 5, "discount": 0.08, "natural_digital_migration": 0.15},
+  "segments": [
+    {"name": "physical_heavy", "members": 150000, "margin_y1": 18000, "physical_units_y1": 6, "contribution_uplift_per_copy": 400, "baseline_retention": 0.92},
+    {"name": "mixed", "members": 350000, "margin_y1": 10000, "physical_units_y1": 2, "contribution_uplift_per_copy": 400, "baseline_retention": 0.92},
+    {"name": "digital", "members": 500000, "margin_y1": 6000, "physical_units_y1": 0, "contribution_uplift_per_copy": 400, "baseline_retention": 0.92}
+  ],
+  "policies": [
+    {"id": "baseline", "parameters": {"avoided_fixed_annual": 0, "transition_cost": 0}, "responses": {
+      "physical_heavy": {"conversion_fraction": 0}, "mixed": {"conversion_fraction": 0}, "digital": {"conversion_fraction": 0}
+    }},
+    {"id": "full_calm", "parameters": {"avoided_fixed_annual": 120000000, "transition_cost": 150000000}, "responses": {
+      "physical_heavy": {"initial_exit": 0.02, "annual_extra_exit": 0.005, "spend_haircut": 0.02},
+      "mixed": {"initial_exit": 0.01, "annual_extra_exit": 0.003, "spend_haircut": 0.005},
+      "digital": {"initial_exit": 0.002, "annual_extra_exit": 0.001, "spend_haircut": 0}
+    }},
+    {"id": "full_stress", "parameters": {"avoided_fixed_annual": 120000000, "transition_cost": 150000000}, "responses": {
+      "physical_heavy": {"initial_exit": 0.10, "annual_extra_exit": 0.02, "spend_haircut": 0.04},
+      "mixed": {"initial_exit": 0.045, "annual_extra_exit": 0.01, "spend_haircut": 0.02},
+      "digital": {"initial_exit": 0.01, "annual_extra_exit": 0.005, "spend_haircut": 0.01}
+    }},
+    {"id": "full_assurance", "parameters": {"avoided_fixed_annual": 120000000, "transition_cost": 500000000}, "responses": {
+      "physical_heavy": {"initial_exit": 0.025, "annual_extra_exit": 0.006, "spend_haircut": 0.012, "annual_assurance_cost_per_member": 120},
+      "mixed": {"initial_exit": 0.015, "annual_extra_exit": 0.004, "spend_haircut": 0.006, "annual_assurance_cost_per_member": 120},
+      "digital": {"initial_exit": 0.003, "annual_extra_exit": 0.001, "spend_haircut": 0.001, "annual_assurance_cost_per_member": 120}
+    }},
+    {"id": "selective_physical", "parameters": {"avoided_fixed_annual": 30000000, "transition_cost": 120000000}, "responses": {
+      "physical_heavy": {"initial_exit": 0.01, "annual_extra_exit": 0.002, "spend_haircut": 0.005, "conversion_fraction": 0.25, "annual_assurance_cost_per_member": 40},
+      "mixed": {"initial_exit": 0.008, "annual_extra_exit": 0.002, "spend_haircut": 0.003, "conversion_fraction": 0.65, "annual_assurance_cost_per_member": 40},
+      "digital": {"initial_exit": 0.001, "annual_extra_exit": 0.0005, "spend_haircut": 0, "conversion_fraction": 0, "annual_assurance_cost_per_member": 40}
+    }}
+  ]
+}
