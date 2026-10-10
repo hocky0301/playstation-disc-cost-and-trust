@@ -10,8 +10,4 @@ __pycache__/
 .env.*
 *.pem
 *.key
-# Local work not intended for publication
-private/
-private_handoff/
-editorial/
 node_modules/

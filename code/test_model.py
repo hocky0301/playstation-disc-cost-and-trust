@@ -1,6 +1,8 @@
 import copy
+import csv
 import json
 import math
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 import unittest
 from model import Segment, Response, evaluate, simple_delta, exit_break_even, information_value, from_config
@@ -89,5 +91,70 @@ class ModelTests(unittest.TestCase):
         self.assertAlmostEqual(r['evpi']/1e9,1.35)
     def test_reproducible(self):
         self.assertEqual(from_config(self.config),from_config(self.config))
+
+def _rounded(value, scale, places):
+    """Divide by scale, then round once (half up) to the given decimal places."""
+    return Decimal(repr(value / scale)).quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_UP)
+
+
+class ArticleNumberTests(unittest.TestCase):
+    """The model-derived numbers printed in the Zenn article, against the saved results.
+
+    Each saved value is rounded once, directly to the digits shown in the article.
+    (Natural migration 30% is 8.86; the article's first printing said 8.87, from rounding twice.)
+    Money is in units of 100 million yen (oku-en); break-even rates are in percent.
+    """
+    OKU = 1e8
+    PERCENT = 0.01
+
+    @classmethod
+    def setUpClass(cls):
+        results = Path(__file__).parents[1] / 'results'
+        cls.main = json.loads((results / 'results.json').read_text(encoding='utf-8'))
+        cls.sens = json.loads((results / 'sensitivity.json').read_text(encoding='utf-8'))
+        with (results / 'natural_migration.csv').open(encoding='utf-8', newline='') as f:
+            cls.migration = {(float(r['natural_migration']), r['policy']): float(r['npv']) for r in csv.DictReader(f)}
+        with (results / 'simple_frontier.csv').open(encoding='utf-8', newline='') as f:
+            cls.frontier = {(float(r['uplift_pv_per_member']), float(r['incremental_exit'])): float(r['delta_pv']) for r in csv.DictReader(f)}
+
+    def table(self):
+        m, s = self.main, self.sens
+        stress = m['policies']['full_stress']['components_pv']
+        info = m['information_example']
+        return [
+            # (label, saved value, scale, decimal places, number the article should print)
+            # When the article's numbers change, update this table with them.
+            ('simple: nobody leaves (oku-en)', self.frontier[(3000.0, 0.0)], self.OKU, 1, '32.0'),
+            ('simple: 5% leave (oku-en)', m['simple']['exit_5pct_delta'], self.OKU, 1, '10.5'),
+            ('simple: 8% leave (oku-en)', m['simple']['exit_8pct_delta'], self.OKU, 1, '-2.4'),
+            ('simple: break-even exit (%)', m['simple']['break_even_exit'], self.PERCENT, 2, '7.44'),
+            ('simple: break-even when 1% of the rest spend less (%)', m['simple']['break_even_with_1pct_spending_loss'], self.PERCENT, 2, '6.51'),
+            ('simple: break-even when uplift is 600 yen (%)', m['simple']['cost_only_break_even'], self.PERCENT, 2, '1.97'),
+            ('five years: full removal, calm', m['policies']['full_calm']['npv'], self.OKU, 2, '12.49'),
+            ('five years: full removal, strong reaction', m['policies']['full_stress']['npv'], self.OKU, 2, '-10.15'),
+            ('five years: invest in continued use', m['policies']['full_assurance']['npv'], self.OKU, 2, '3.86'),
+            ('five years: keep a small physical line', m['policies']['selective_physical']['npv'], self.OKU, 2, '2.13'),
+            ('five years: investment changes no behaviour', s['assurance_without_behavior_change']['npv'], self.OKU, 2, '-17.58'),
+            ('strong reaction: retained uplift', stress['retained_uplift'], self.OKU, 2, '15.56'),
+            ('strong reaction: avoided fixed cost', stress['avoided_fixed'], self.OKU, 2, '4.79'),
+            ('strong reaction: profit of members who left', stress['exit_loss'], self.OKU, 2, '21.87'),
+            ('strong reaction: profit of reduced spending', stress['spend_loss'], self.OKU, 2, '7.13'),
+            ('strong reaction: transition cost', stress['transition_cost'], self.OKU, 1, '1.5'),
+            ('natural migration 0%', self.migration[(0.0, 'full_calm')], self.OKU, 2, '17.35'),
+            ('natural migration 15%', self.migration[(0.15, 'full_calm')], self.OKU, 2, '12.49'),
+            ('natural migration 30%', self.migration[(0.3, 'full_calm')], self.OKU, 2, '8.86'),
+            ('information: adopt without information', info['adopt_without_information'], self.OKU, 1, '8.5'),
+            ('information: with perfect information', info['perfect_information_value_before_cost'], self.OKU, 0, '22'),
+            ('information: value of perfect information', info['evpi'], self.OKU, 1, '13.5'),
+            ('information: upper bound after research cost', info['net_upper_bound_of_research'], self.OKU, 1, '11.5'),
+        ]
+
+    def test_article_numbers_match_saved_results(self):
+        rows = self.table()
+        self.assertEqual(len(rows), 23)
+        for label, value, scale, places, printed in rows:
+            with self.subTest(label):
+                self.assertEqual(_rounded(value, scale, places), Decimal(printed))
+
 
 if __name__=='__main__': unittest.main()
